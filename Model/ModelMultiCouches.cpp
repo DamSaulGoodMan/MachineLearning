@@ -7,5 +7,4 @@
 
 void ModelMultiCouches::initEntry(double *entryValue)
 {
-    for()
 }

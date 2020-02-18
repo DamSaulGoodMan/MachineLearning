@@ -12,10 +12,14 @@
 class ModelLinear : public Model
 {
 public:
-    explicit ModelLinear(int dimInputNumber, int dimOutputNumber);
+    explicit ModelLinear(int dimInputNumber);
 
-    void initEntry(double *entryValue) override;
+    void train(int entryNumber, const double predictState[], double trainingParams[], double trainingStep, int epoch);
+    int predict(double *params);
 
+private:
+    int weightsNum;
+    double* weights;
 };
 
 
