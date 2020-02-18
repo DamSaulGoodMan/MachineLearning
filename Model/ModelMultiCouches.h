@@ -12,9 +12,18 @@
 class ModelMultiCouches : public Model
 {
 public:
-    explicit ModelMultiCouches(int entryNumber);
+    ModelMultiCouches(int dimInputNumber,
+                      int dimOutputNumber,
+                      int numOfDeepLayer,
+                      int neuronesInDeepLayer[]);
+
+    void train(double *valuesOfEntry, int entryNumber, double *predictState, double trainingStep, int epoch) override;
+
+    int predict(double *entry) override;
 
 private:
+    int numOfDeepLayer;
+    int* neuronesInDeepLayer;
     double** neurones;
     double*** weight;
 };

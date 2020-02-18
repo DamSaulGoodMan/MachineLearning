@@ -11,6 +11,14 @@ class Model
 public:
     Model(int dimInputNumber, int dimOutputNumber);
 
+    virtual void train(double valuesOfEntry[],
+            int entryNumber,
+            double predictState[],
+            double trainingStep,
+            int epoch) = 0;
+
+    virtual int predict(double *entry) = 0;
+
 protected:
     double* input;
     double* output;

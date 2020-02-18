@@ -14,8 +14,8 @@ class ModelLinear : public Model
 public:
     explicit ModelLinear(int dimInputNumber);
 
-    void train(double valuesOfEntry[], int entryNumber, double predictState[], double trainingStep, int epoch);
-    int predict(double *params);
+    void train(double valuesOfEntry[], int entryNumber, double predictState[], double trainingStep, int epoch) override;
+    int predict(double *params) override;
 
 private:
     int weightsNum;
