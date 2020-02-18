@@ -12,6 +12,8 @@ EXPORTED ModelLinear* createLinearModel(int dimInputNumber, int dimOutputNumber)
     auto model = new ModelLinear(dimInputNumber);
 
     ModelManager::getModelManager()->addNewModel(model);
+
+    return model;
 }
 
 EXPORTED void trainLinearModel(ModelLinear* modelLinear, double valuesOfEntry[], int entryNumber,
