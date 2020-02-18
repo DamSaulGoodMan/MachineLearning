@@ -23,7 +23,7 @@ void ModelManager::addNewModel(Model* model)
     modelStore.push_back(model);
 }
 
-void ModelManager::removeModel(Model *model)
+bool ModelManager::removeModel(Model *model)
 {
     for (auto iterator = modelStore.begin(); iterator != modelStore.end(); ++iterator)
     {
@@ -31,7 +31,9 @@ void ModelManager::removeModel(Model *model)
         {
             modelStore.erase(iterator);
             delete model;
-            break;
+            return true;
         }
     }
+
+    return false;
 }
