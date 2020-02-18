@@ -29,7 +29,7 @@ EXPORTED int predict(ModelLinear* model, double params[], int numParam)
 
 EXPORTED bool removeModel(Model* model)
 {
-    ModelManager::getModelManager()->removeModel(model);
+    return ModelManager::getModelManager()->removeModel(model);
 }
 
 }
