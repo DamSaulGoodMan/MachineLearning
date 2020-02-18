@@ -21,19 +21,19 @@ ModelLinear::ModelLinear(int dimInputNumber)
     }
 }
 
-void ModelLinear::train(int entryNumber, const double predictState[], double trainingParams[], double trainingStep, int epoch)
+void ModelLinear::train(double valuesOfEntry[], int entryNumber, double predictState[], double trainingStep, int epoch)
 {
     for(int cnt = 0; cnt < epoch; cnt++)
     {
         for(int cnt1 = 0; cnt1 < entryNumber; cnt1++)
         {
             int trainingParamsPosition = weightsNum * cnt1;
-            double modification = (double)trainingStep * (predictState[cnt1] - predict(&trainingParams[trainingParamsPosition]));
+            double modification = (double)trainingStep * (predictState[cnt1] - predict(&valuesOfEntry[trainingParamsPosition]));
             weights[0] += modification;
 
             for(int cnt2 = 0; cnt2 < weightsNum; cnt2++)
             {
-                weights[cnt2 + 1] += modification * trainingParams[trainingParamsPosition + cnt2];
+                weights[cnt2 + 1] += modification * valuesOfEntry[trainingParamsPosition + cnt2];
             }
         }
     }

@@ -24,7 +24,12 @@ EXPORTED void trainLinearModel(ModelLinear* modelLinear, double valuesOfEntry[],
 
 EXPORTED int predict(ModelLinear* model, double params[], int numParam)
 {
-    model->predict(params);
+    return model->predict(params);
+}
+
+EXPORTED int removeModel(Model* model, double params[], int numParam)
+{
+
 }
 
 }

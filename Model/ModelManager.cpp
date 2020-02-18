@@ -22,3 +22,15 @@ void ModelManager::addNewModel(Model* model)
 {
     modelStore.push_back(model);
 }
+
+void ModelManager::removeModel(Model *model)
+{
+    for (auto iterator = modelStore.begin(); iterator != modelStore.end(); ++iterator)
+    {
+        if((*iterator) == model)
+        {
+            modelStore.erase(iterator);
+            break;
+        }
+    }
+}
