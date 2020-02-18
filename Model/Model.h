@@ -11,8 +11,6 @@ class Model
 public:
     Model(int dimInputNumber, int dimOutputNumber);
 
-    virtual void initEntry(double entryValue[]) = 0;
-
 protected:
     double* input;
     double* output;

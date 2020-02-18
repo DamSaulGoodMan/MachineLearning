@@ -17,12 +17,12 @@ EXPORTED ModelLinear* createLinearModel(int dimInputNumber, int dimOutputNumber)
 EXPORTED void trainLinearModel(ModelLinear* modelLinear, double valuesOfEntry[], int entryNumber,
         double predictState[], double trainingStep, int epoch)
 {
-
+    modelLinear->train(entryNumber, predictState, valuesOfEntry, trainingStep, epoch);
 }
 
-EXPORTED double predict(Model* model, double params[], int numParam)
+EXPORTED int predict(ModelLinear* model, double params[], int numParam)
 {
-
+    model->predict(params);
 }
 
 }
