@@ -5,7 +5,13 @@
 #include "ModelLinear.h"
 
 
-ModelLinear::ModelLinear(int entryNumber)
+ModelLinear::ModelLinear(int dimInputNumber, int dimOutputNumber)
+    : Model(dimInputNumber, dimOutputNumber)
 {
-    entry = new double[entryNumber];
+
+}
+
+void ModelLinear::initEntry(double *entryValue)
+{
+
 }

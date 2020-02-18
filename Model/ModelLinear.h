@@ -12,10 +12,10 @@
 class ModelLinear : public Model
 {
 public:
-    explicit ModelLinear(int entryNumber);
+    explicit ModelLinear(int dimInputNumber, int dimOutputNumber);
 
-private:
-    double* entry;
+    void initEntry(double *entryValue) override;
+
 };
 
 

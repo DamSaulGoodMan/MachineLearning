@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 20)
 
 find_package (Eigen3 REQUIRED)
 
-add_library(MachineLearning SHARED API/API.cpp API/API.h export.h Model/ModelManager.cpp Model/ModelManager.h Model/Model.cpp Model/Model.h Model/ModelLinear.cpp Model/ModelLinear.h)
+add_library(MachineLearning SHARED API/API.cpp API/API.h export.h Model/ModelManager.cpp Model/ModelManager.h Model/Model.cpp Model/Model.h Model/ModelLinear.cpp Model/ModelLinear.h Model/ModelMultiCouches.cpp Model/ModelMultiCouches.h)
 
 target_link_libraries (MachineLearning Eigen3::Eigen)
 

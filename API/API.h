@@ -8,10 +8,10 @@
 extern "C"
 {
 
-EXPORTED ModelLinear* createLinearModel(int entryNumber);
-EXPORTED void trainLinearModel(ModelLinear* modelLinear, double valuesOfEntry[], int entryNumber, bool predictState[]);
-
-EXPORTED bool predict(Model* model);
+//EXPORTED ModelLinear* createLinearModel(int entryNumber);
+//EXPORTED void trainLinearModel(ModelLinear* modelLinear, double valuesOfEntry[], int entryNumber, bool predictState[]);
+//
+//EXPORTED bool predict(Model* model);
 
 }
 
