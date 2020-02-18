@@ -25,16 +25,17 @@ void ModelLinear::train(double valuesOfEntry[], int entryNumber, double predictS
 {
     for(int cnt = 0; cnt < epoch; cnt++)
     {
-        for(int cnt1 = 0; cnt1 < entryNumber; cnt1++)
-        {
-            int trainingParamsPosition = weightsNum * cnt1;
-            double modification = (double)trainingStep * (predictState[cnt1] - predict(&valuesOfEntry[trainingParamsPosition]));
-            weights[0] += modification;
+        std::random_device rd;
+        int initWeight = ((rd() % 2) ? 1 : -1);
+        int pickedTraining = floor(initWeight * entryNumber);
 
-            for(int cnt2 = 0; cnt2 < weightsNum; cnt2++)
-            {
-                weights[cnt2 + 1] += modification * valuesOfEntry[trainingParamsPosition + cnt2];
-            }
+        int trainingParamsPosition = weightsNum * pickedTraining;
+        double modification = (double)trainingStep * (predictState[pickedTraining] - predict(&valuesOfEntry[trainingParamsPosition]));
+        weights[0] += modification;
+
+        for(int cnt2 = 0; cnt2 < weightsNum; cnt2++)
+        {
+            weights[cnt2 + 1] += modification * valuesOfEntry[trainingParamsPosition + cnt2];
         }
     }
 }

@@ -24,20 +24,16 @@ void predictAll(ModelLinear* model) {
 
 void hugoTest()
 {
-    auto modelLi = new ModelLinear(10);
+    auto modelLi = new ModelLinear(2);
     double trainingParams[] = {-3, 9, 6, 13, -7, 2};
     double trainingResults[] = {1, 1, -1};
-    modelLi->train(trainingParams, 3, trainingResults, 0.01, 6);
+    modelLi->train(trainingParams, 3, trainingResults, 0.1, 1000);
     predictAll(modelLi);
 }
 
 int main()
 {
-    auto modelLi = new ModelLinear(10);
-    double trainingParams[] = {-3, 9, 6, 13, -7, 2};
-    double trainingResults[] = {1, 1, -1};
-    modelLi->train(trainingParams, 3, trainingResults, 0.01, 6);
-    predictAll(modelLi);
+    hugoTest();
 }
 
 void damTest()
