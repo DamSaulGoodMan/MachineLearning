@@ -3,8 +3,3 @@
 //
 
 #include "ModelMultiCouches.h"
-
-
-void ModelMultiCouches::initEntry(double *entryValue)
-{
-}

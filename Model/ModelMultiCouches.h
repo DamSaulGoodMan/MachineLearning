@@ -14,8 +14,6 @@ class ModelMultiCouches : public Model
 public:
     explicit ModelMultiCouches(int entryNumber);
 
-    void initEntry(double *entryValue) override;
-
 private:
     double** neurones;
     double*** weight;
