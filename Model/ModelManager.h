@@ -19,7 +19,7 @@ public:
     static ModelManager* getModelManager();
 
     void addNewModel(Model* model);
-    void removeModel(Model* model);
+    bool removeModel(Model* model);
 
 private:
     static ModelManager* INSTANCE;
