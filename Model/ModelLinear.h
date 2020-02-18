@@ -17,6 +17,8 @@ public:
     void train(double valuesOfEntry[], int entryNumber, double predictState[], double trainingStep, int epoch) override;
     int predict(double *params) override;
 
+    virtual ~ModelLinear();
+
 private:
     int weightsNum;
     double* weights;

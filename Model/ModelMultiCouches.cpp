@@ -6,52 +6,29 @@
 #include "ModelMultiCouches.h"
 
 
-ModelMultiCouches::ModelMultiCouches(int dimInputNumber,
-                                     int dimOutputNumber,
-                                     int numOfDeepLayer,
-                                     int neuronesInDeepLayer[])
-     : Model(dimInputNumber, dimOutputNumber),
-        numOfDeepLayer(numOfDeepLayer), neuronesInDeepLayer(neuronesInDeepLayer)
+ModelMultiCouches::ModelMultiCouches(int numOfLayer, int neuronesInLayer[])
+     : Model(neuronesInLayer[0], neuronesInLayer[numOfLayer - 1]),
+        numOfLayer(numOfLayer), neuronesInLayer(neuronesInLayer)
 {
-    neurones = new double*[numOfDeepLayer + 2];
-    weight = new double**[numOfDeepLayer + 1];
+    neurones = new double*[numOfLayer];
+    weight = new double**[numOfLayer - 1];
 
-    neurones[0] = new double[dimInputNumber + 1];
-    weight[0] = new double*[dimInputNumber + 1];
-    for (int cnt = 0; cnt < dimInputNumber + 1; cnt++)
+    for (int cnt = 0; cnt < numOfLayer; cnt++)
     {
-        weight[0][cnt] = new double[neuronesInDeepLayer[0] + 1];
+        neurones[cnt] = new double[neuronesInLayer[cnt]];
+        neurones[cnt][0] = 1;
 
-        for (int cnt1 = 0; cnt1 < neuronesInDeepLayer[0] + 1; cnt1++)
+        if(cnt > 0)
         {
-            weight[0][cnt][cnt1] = ((rand() % 2) ? 1 : -1);
-        }
-    }
-
-    for (int cnt = 0; cnt < numOfDeepLayer - 1; cnt++)
-    {
-        weight[cnt + 1] = new double*[neuronesInDeepLayer[cnt] + 1];
-        for (int cnt1 = 0; cnt1 < neuronesInDeepLayer[cnt] + 1; cnt1++)
-        {
-            weight[cnt + 1][cnt1] = new double[neuronesInDeepLayer[cnt + 1] + 1];
-
-            for (int cnt2 = 0; cnt2 < neuronesInDeepLayer[cnt + 1] + 1; cnt2++)
+            weight[cnt] = new double*[numOfLayer - 1];
+            for (int cnt1 = 0; cnt1 < numOfLayer; cnt1++)
             {
-                weight[cnt + 1][cnt1][cnt2] = ((rand() % 2) ? 1 : -1);
+                weight[cnt][cnt1] = new double[neuronesInLayer[cnt - 1]];
+                for (int cnt2 = 0; cnt2 < neuronesInLayer[cnt - 1]; cnt2++)
+                {
+                    weight[cnt][cnt1][cnt2] = ((rand() % 2) ? 1 : -1);
+                }
             }
-        }
-    }
-
-    neurones[numOfDeepLayer + 1] = new double[dimOutputNumber + 1];
-    weight[numOfDeepLayer] = new double*[neuronesInDeepLayer[numOfDeepLayer - 1] + 1];
-
-    for (int cnt = 0; cnt < dimOutputNumber + 1; cnt++)
-    {
-        weight[numOfDeepLayer][cnt] = new double[dimOutputNumber + 1];
-
-        for (int cnt1 = 0; cnt1 < dimOutputNumber + 1; cnt1++)
-        {
-            weight[numOfDeepLayer][cnt][cnt1] = ((rand() % 2) ? 1 : -1);
         }
     }
 }
@@ -71,4 +48,23 @@ ModelMultiCouches::train(double *valuesOfEntry, int entryNumber, double *predict
 int ModelMultiCouches::predict(double *entry)
 {
     return 0;
+}
+
+ModelMultiCouches::~ModelMultiCouches()
+{
+    for (int cnt = 0; cnt < numOfLayer + 2; cnt++)
+    {
+        delete[] neurones[cnt];
+    }
+    delete[] neurones;
+
+    for (int cnt = 0; cnt < numOfLayer - 1; cnt++)
+    {
+        for (int cnt1 = 0; cnt1 < neuronesInLayer[cnt]; cnt1++)
+        {
+            delete[] weight[cnt][cnt1];
+        }
+        delete[] weight[cnt];
+    }
+    delete[] weight;
 }

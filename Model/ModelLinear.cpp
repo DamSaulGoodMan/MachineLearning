@@ -51,3 +51,8 @@ int ModelLinear::predict(double *entry)
     int result = ((sum < 0) ? -1 : 1);
     return result;
 }
+
+ModelLinear::~ModelLinear()
+{
+    delete[] weights;
+}
