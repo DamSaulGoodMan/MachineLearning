@@ -27,9 +27,9 @@ EXPORTED int predict(ModelLinear* model, double params[], int numParam)
     return model->predict(params);
 }
 
-EXPORTED int removeModel(Model* model, double params[], int numParam)
+EXPORTED void removeModel(Model* model)
 {
-    ModelManager::getModelManager()->removeModel()
+    ModelManager::getModelManager()->removeModel(model);
 }
 
 }

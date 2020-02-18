@@ -30,6 +30,7 @@ void ModelManager::removeModel(Model *model)
         if((*iterator) == model)
         {
             modelStore.erase(iterator);
+            delete model;
             break;
         }
     }
