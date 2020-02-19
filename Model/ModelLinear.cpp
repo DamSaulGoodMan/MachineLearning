@@ -37,7 +37,7 @@ void ModelLinear::train(double* valuesOfEntry, int exempleNumber, double predict
         double modification = (double)trainingStep * (predictState[pickedTraining] - predict(trainingParamsPointer));
         weights[0] += modification;
 
-        for(int cnt1 = 0; cnt1 < exempleNumber; cnt1++)
+        for(int cnt1 = 0; cnt1 < weightsNum - 1; cnt1++)
         {
             weights[cnt1 + 1] += modification * trainingParamsPointer[cnt1];
         }
