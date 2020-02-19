@@ -4,13 +4,11 @@
 
 #include <random>
 #include <iostream>
-#include <Eigen/Dense>
+#include <eigen3/Eigen/Dense>
 #include "ModelLinear.h"
 #include "../Commun.h"
 
-
 using namespace std;
-
 
 ModelLinear::ModelLinear(int dimInputNumber)
     : Model(dimInputNumber, 1)
