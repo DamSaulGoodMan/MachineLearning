@@ -4,6 +4,7 @@
 
 #include <random>
 #include "ModelMultiCouches.h"
+#include "../Commun.h"
 
 
 ModelMultiCouches::ModelMultiCouches(int numOfLayer, int neuronesInLayer[])
@@ -26,7 +27,7 @@ ModelMultiCouches::ModelMultiCouches(int numOfLayer, int neuronesInLayer[])
                 weight[cnt][cnt1] = new double[neuronesInLayer[cnt] + 1];
                 for (int cnt2 = 1; cnt2 < neuronesInLayer[cnt] + 1; cnt2++)
                 {
-                    weight[cnt][cnt1][cnt2] = ((rand() % 2) ? 1 : -1);
+                    weight[cnt][cnt1][cnt2] = Commun::fRand(-1.0f, 1.0f);
                 }
             }
         }

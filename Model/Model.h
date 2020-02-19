@@ -19,6 +19,10 @@ public:
 
     virtual int predict(double *entry) = 0;
 
+    virtual ~Model();
+
+    virtual ~Model();
+
 protected:
     double* input;
     double* output;
