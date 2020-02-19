@@ -18,7 +18,7 @@ ModelLinear::ModelLinear(int dimInputNumber)
 
     for (int cnt = 0; cnt < weightsNum; cnt++)
     {
-        weights[cnt] = ((rand() % 2) ? 1 : -1);
+        weights[cnt] = ((rand() % 2) ? 1 : -1); // entre -1 et 1
     }
 }
 
@@ -26,16 +26,16 @@ void ModelLinear::train(double valuesOfEntry[], int entryNumber, double predictS
 {
     for(int cnt = 0; cnt < epoch; cnt++)
     {
-        int initWeight = ((rand() % 2) ? 1 : -1);
-        int pickedTraining = floor(initWeight * entryNumber);
-
-        int trainingParamsPosition = weightsNum * pickedTraining;
-        double modification = (double)trainingStep * (predictState[pickedTraining] - predict(&valuesOfEntry[trainingParamsPosition]));
+        //int initWeight = ((rand() % 2) ? 1 : -1);
+        //int pickedTraining = floor(initWeight * entryNumber);
+        //int pickedTraining = rand() % nbExemples
+        double* trainingParamsPointer = valuesOfEntry + entryNumber * pickedTraining;
+        double modification = (double)trainingStep * (predictState[pickedTraining] - predict(trainingParamsPointer));
         weights[0] += modification;
 
-        for(int cnt1 = 0; cnt1 < weightsNum; cnt1++)
+        for(int cnt1 = 0; cnt1 < entryNumber; cnt1++)
         {
-            weights[cnt1 + 1] += modification * valuesOfEntry[trainingParamsPosition + cnt1];
+            weights[cnt1 + 1] += modification * trainingParamsPointer[cnt1];
         }
     }
 }
