@@ -4,7 +4,7 @@
 
 #include <random>
 #include <iostream>
-#include "../../eigen-3.3.7/Eigen/Dense"
+#include <Eigen/Dense>
 #include "ModelLinear.h"
 #include "../Commun.h"
 
