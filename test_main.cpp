@@ -27,7 +27,7 @@ void hugoTest()
     auto modelLi = new ModelLinear(2);
     double trainingParams[] = {-3, 9, 6, 13, -7, 2};
     double trainingResults[] = {1, 1, -1};
-    modelLi->train(trainingParams, 3, trainingResults, 0.001, 1000);
+    modelLi->train(trainingParams, 3, trainingResults, 0.0001, 10000);
     predictAll(modelLi);
     delete modelLi;
 }

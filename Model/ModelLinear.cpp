@@ -28,11 +28,7 @@ void ModelLinear::train(double* valuesOfEntry, int exempleNumber, double predict
     for(int cnt = 0; cnt < epoch; cnt++)
     {
         int pickedTraining = rand() % exempleNumber;
-//        cerr << "pickedTraining=" << pickedTraining << " rand()=" << rand() << endl;
-
         double* trainingParamsPointer = valuesOfEntry + (pickedTraining * (exempleNumber - 1));
-//        cerr << "case = " << pickedTraining * (entryNumber - 1) << endl;
-//        cerr << "ptr = " << trainingParamsPointer << endl;
 
         double modification = (double)trainingStep * (predictState[pickedTraining] - predict(trainingParamsPointer));
         weights[0] += modification;

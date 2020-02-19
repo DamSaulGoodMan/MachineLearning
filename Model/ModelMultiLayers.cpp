@@ -3,11 +3,11 @@
 //
 
 #include <random>
-#include "ModelMultiCouches.h"
+#include "ModelMultiLayers.h"
 #include "../Commun.h"
 
 
-ModelMultiCouches::ModelMultiCouches(int numOfLayer, int neuronesInLayer[])
+ModelMultiLayers::ModelMultiLayers(int numOfLayer, int neuronesInLayer[])
      : Model(neuronesInLayer[0], neuronesInLayer[numOfLayer - 1]),
         numOfLayer(numOfLayer), neuronesInLayer(neuronesInLayer)
 {
@@ -35,7 +35,7 @@ ModelMultiCouches::ModelMultiCouches(int numOfLayer, int neuronesInLayer[])
 }
 
 void
-ModelMultiCouches::train(double *valuesOfEntry, int entryNumber, double *predictState, double trainingStep, int epoch)
+ModelMultiLayers::train(double *valuesOfEntry, int entryNumber, double *predictState, double trainingStep, int epoch)
 {
     for(int cnt = 0; cnt < epoch; cnt++)
     {
@@ -46,13 +46,13 @@ ModelMultiCouches::train(double *valuesOfEntry, int entryNumber, double *predict
     }
 }
 
-int ModelMultiCouches::predict(double *entry)
+int ModelMultiLayers::predict(double *entry)
 {
 
     return 0;
 }
 
-ModelMultiCouches::~ModelMultiCouches()
+ModelMultiLayers::~ModelMultiLayers()
 {
     for (int cnt = 0; cnt < numOfLayer + 2; cnt++)
     {
