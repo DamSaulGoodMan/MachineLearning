@@ -21,8 +21,6 @@ public:
 
     virtual ~Model();
 
-    virtual ~Model();
-
 protected:
     double* input;
     double* output;
