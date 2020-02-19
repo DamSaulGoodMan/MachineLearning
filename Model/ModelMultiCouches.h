@@ -16,7 +16,7 @@ public:
 
     void train(double *valuesOfEntry, int entryNumber, double *predictState, double trainingStep, int epoch) override;
 
-    int predict(double *entry) override;
+    double predict(double *entry) override;
 
     virtual ~ModelMultiCouches();
 

@@ -23,9 +23,19 @@ EXPORTED void trainModel(Model* model, double valuesOfEntry[], int entryNumber,
     model->train(valuesOfEntry, entryNumber, predictState, trainingStep, epoch);
 }
 
-EXPORTED int predict(Model* model, double params[], int numParam)
+EXPORTED void regressModel(Model* model, double inputs[], int nbOfInputsPackets, double predictState[])
+{
+    model->regress(inputs, nbOfInputsPackets, predictState);
+}
+
+EXPORTED double predict(Model* model, double params[])
 {
     return model->predict(params);
+}
+
+EXPORTED double predictRegression(Model* model, double params[])
+{
+    return model->predictRegression(params);
 }
 
 EXPORTED bool removeModel(Model* model)

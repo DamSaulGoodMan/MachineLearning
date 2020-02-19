@@ -17,7 +17,10 @@ public:
             double trainingStep,
             int epoch) = 0;
 
-    virtual int predict(double *entry) = 0;
+    virtual void regress(double inputs[], int nbOfInputsPackets, double predictState[]) = 0;
+
+    virtual double predict(double *entry) = 0;
+    virtual double predictRegression(double *entry) = 0;
 
     virtual ~Model();
 

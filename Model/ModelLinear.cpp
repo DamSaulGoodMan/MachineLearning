@@ -4,6 +4,7 @@
 
 #include <random>
 #include <iostream>
+#include "../../eigen-3.3.7/Eigen/Dense"
 #include "ModelLinear.h"
 #include "../Commun.h"
 
@@ -23,6 +24,33 @@ ModelLinear::ModelLinear(int dimInputNumber)
     }
 }
 
+void ModelLinear::regress(double inputs[], int nbOfInputsPackets, double predictState[])
+{
+    // INIT
+    int packetSize = 2;
+    Eigen::MatrixXd X(nbOfInputsPackets, packetSize + 1);
+    Eigen::MatrixXd Y(nbOfInputsPackets, 1);
+
+    for (int i = 0; i < nbOfInputsPackets * packetSize; i += packetSize) {
+        X(i, 0) = inputs[i];
+        X(i, 1) = inputs[i + 1];
+        X(i, 2) = 1;
+    }
+
+    for (int i = 0; i < nbOfInputsPackets; i++) {
+        Y(i, 0) = predictState[i];
+    }
+
+    // Do the regression
+    Eigen::MatrixXd XTranspose = X.transpose();
+    Eigen::MatrixXd result = ((XTranspose * X).inverse() * XTranspose) * Y;
+
+    // Apply result to weight
+    for(int i = 0; i < nbOfInputsPackets; i++) {
+        weights[i] += result(i, 0);
+    }
+}
+
 void ModelLinear::train(double valuesOfEntry[], int entryNumber, double predictState[], double trainingStep, int epoch)
 {
     for(int cnt = 0; cnt < epoch; cnt++)
@@ -39,16 +67,21 @@ void ModelLinear::train(double valuesOfEntry[], int entryNumber, double predictS
     }
 }
 
-int ModelLinear::predict(double *entry)
+double ModelLinear::predictRegression(double *entry)
 {
     double sum = weights[0];
+
     for(int i = 0; i < weightsNum; i++)
     {
         sum += entry[i] * weights[i + 1];
     }
 
-    int result = ((sum < 0) ? -1 : 1);
-    return result;
+    return sum;
+}
+
+double ModelLinear::predict(double *entry)
+{
+    return ((predictRegression(entry) < 0) ? -1 : 1);
 }
 
 ModelLinear::~ModelLinear()

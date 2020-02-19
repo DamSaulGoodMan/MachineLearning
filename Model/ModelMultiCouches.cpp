@@ -46,7 +46,7 @@ ModelMultiCouches::train(double *valuesOfEntry, int entryNumber, double *predict
     }
 }
 
-int ModelMultiCouches::predict(double *entry)
+double ModelMultiCouches::predict(double *entry)
 {
 
     return 0;
