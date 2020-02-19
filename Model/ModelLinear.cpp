@@ -28,7 +28,12 @@ void ModelLinear::train(double valuesOfEntry[], int entryNumber, double predictS
     for(int cnt = 0; cnt < epoch; cnt++)
     {
         int pickedTraining = rand() % entryNumber;
-        double* trainingParamsPointer = valuesOfEntry + entryNumber * pickedTraining;
+//        cerr << "pickedTraining=" << pickedTraining << " rand()=" << rand() << endl;
+
+        double* trainingParamsPointer = &valuesOfEntry[pickedTraining * (entryNumber - 1)];
+//        cerr << "case = " << pickedTraining * (entryNumber - 1) << endl;
+//        cerr << "ptr = " << trainingParamsPointer << endl;
+
         double modification = (double)trainingStep * (predictState[pickedTraining] - predict(trainingParamsPointer));
         weights[0] += modification;
 
@@ -44,7 +49,16 @@ int ModelLinear::predict(double *entry)
     double sum = weights[0];
     for(int i = 0; i < weightsNum; i++)
     {
-        sum += entry[i] * weights[i + 1];
+        if(i < weightsNum - 1)
+        {
+//            cerr << i << " -> " << entry[i] << endl;
+            sum += entry[i] * weights[i + 1];
+        }
+        else
+        {
+//            cerr << i << " -> " << "biai" << endl;
+            sum += weights[i + 1];
+        }
     }
 
     int result = ((sum < 0) ? -1 : 1);
@@ -53,6 +67,5 @@ int ModelLinear::predict(double *entry)
 
 ModelLinear::~ModelLinear()
 {
-    std::cout << "~ModelLinear" << std::endl;
     delete[] weights;
 }

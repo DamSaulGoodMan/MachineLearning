@@ -12,8 +12,5 @@ Model::Model(int dimInputNumber, int dimOutputNumber)
     output = new double[dimOutputNumber + 1];
 }
 
-Model::~Model()
-{
-    std::cout << "~Model()" << std::endl;
-}
+Model::~Model() = default;
 
