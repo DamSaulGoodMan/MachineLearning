@@ -46,7 +46,16 @@ ModelMultiLayers::train(double *valuesOfEntry, int entryNumber, double *predictS
     }
 }
 
+void ModelMultiLayers::regress(double inputs[], int nbOfInputsPackets, double predictState[]) {}
+
 double ModelMultiLayers::predict(double *entry)
+{
+
+    return 0;
+}
+
+
+double ModelMultiLayers::predictRegression(double *entry)
 {
 
     return 0;

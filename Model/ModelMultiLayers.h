@@ -17,6 +17,8 @@ public:
     void train(double *valuesOfEntry, int entryNumber, double *predictState, double trainingStep, int epoch) override;
 
     double predict(double *entry) override;
+    void regress(double inputs[], int nbOfInputsPackets, double predictState[]) override;
+    double predictRegression(double *entry) override;
 
     virtual ~ModelMultiLayers();
 
