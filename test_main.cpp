@@ -8,8 +8,6 @@
 
 using namespace std;
 
-void damsTest();
-
 void hugoTest();
 
 void predictAll(ModelLinear* model) {
@@ -29,17 +27,24 @@ void hugoTest()
     auto modelLi = new ModelLinear(2);
     double trainingParams[] = {-3, 9, 6, 13, -7, 2};
     double trainingResults[] = {1, 1, -1};
-    modelLi->train(trainingParams, 3, trainingResults, 0.001, 1000);
+    modelLi->train(trainingParams, 3, trainingResults, 0.0001, 10000);
     predictAll(modelLi);
+    delete modelLi;
 }
+
+void damTest();
 
 int main()
 {
     hugoTest();
+    //damTest();
 }
 
 void damTest()
 {
     auto manager = ModelManager::getModelManager();
     auto modelLinear = new ModelLinear(2);
+    manager->addNewModel(modelLinear);
+    //modelLinear->train()
+    //cout << "Model has been remove ? " << manager->removeModel(modelLinear) << endl;
 }

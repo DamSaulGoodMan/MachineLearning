@@ -1,5 +1,6 @@
 #include "API.h"
 #include "../Model/ModelManager.h"
+#include "../Model/ModelMultiLayers.h"
 
 #include <iostream>
 
@@ -7,6 +8,14 @@ using namespace std;
 
 extern "C"
 {
+EXPORTED ModelMultiLayers* createMultiLayersModel(int numOfLayer, int neuronesInLayer[])
+{
+    auto model = new ModelMultiLayers(numOfLayer, neuronesInLayer);
+
+    ModelManager::getModelManager()->addNewModel(model);
+
+    return model;
+}
 
 EXPORTED ModelLinear* createLinearModel(int dimInputNumber, int dimOutputNumber)
 {

@@ -51,16 +51,17 @@ void ModelLinear::regress(double inputs[], int nbOfInputsPackets, double predict
     }
 }
 
-void ModelLinear::train(double valuesOfEntry[], int entryNumber, double predictState[], double trainingStep, int epoch)
+void ModelLinear::train(double* valuesOfEntry, int exempleNumber, double predictState[], double trainingStep, int epoch)
 {
     for(int cnt = 0; cnt < epoch; cnt++)
     {
-        int pickedTraining = rand() % entryNumber;
-        double* trainingParamsPointer = valuesOfEntry + entryNumber * pickedTraining;
+        int pickedTraining = rand() % exempleNumber;
+        double* trainingParamsPointer = valuesOfEntry + (pickedTraining * (exempleNumber - 1));
+
         double modification = (double)trainingStep * (predictState[pickedTraining] - predict(trainingParamsPointer));
         weights[0] += modification;
 
-        for(int cnt1 = 0; cnt1 < entryNumber; cnt1++)
+        for(int cnt1 = 0; cnt1 < weightsNum - 1; cnt1++)
         {
             weights[cnt1 + 1] += modification * trainingParamsPointer[cnt1];
         }
@@ -71,7 +72,7 @@ double ModelLinear::predictRegression(double *entry)
 {
     double sum = weights[0];
 
-    for(int i = 0; i < weightsNum; i++)
+    for(int i = 0; i < weightsNum - 1; i++)
     {
         sum += entry[i] * weights[i + 1];
     }
@@ -86,6 +87,5 @@ double ModelLinear::predict(double *entry)
 
 ModelLinear::~ModelLinear()
 {
-    std::cout << "~ModelLinear" << std::endl;
     delete[] weights;
 }
