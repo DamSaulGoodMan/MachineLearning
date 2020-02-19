@@ -31,10 +31,10 @@ void ModelLinear::regress(double inputs[], int nbOfInputsPackets, double predict
     Eigen::MatrixXd X(nbOfInputsPackets, packetSize + 1);
     Eigen::MatrixXd Y(nbOfInputsPackets, 1);
 
-    for (int i = 0; i < nbOfInputsPackets * packetSize; i += packetSize) {
-        X(i, 0) = inputs[i];
-        X(i, 1) = inputs[i + 1];
-        X(i, 2) = 1;
+    for (int i = 0, j = 0; i < nbOfInputsPackets * packetSize; i += packetSize, j++) {
+        X(j, 0) = inputs[i];
+        X(j, 1) = inputs[i + 1];
+        X(j, 2) = 1;
     }
 
     for (int i = 0; i < nbOfInputsPackets; i++) {
