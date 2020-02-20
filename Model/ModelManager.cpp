@@ -10,6 +10,7 @@ ModelManager* ModelManager::INSTANCE = new ModelManager();
 ModelManager::ModelManager()
 {
     INSTANCE = this;
+    modelStore = nullptr;
 }
 
 
@@ -20,19 +21,16 @@ ModelManager* ModelManager::getModelManager()
 
 void ModelManager::addNewModel(Model* model)
 {
-    modelStore.push_back(model);
+    if(modelStore != nullptr) delete modelStore;
+    modelStore = model;
 }
 
 bool ModelManager::removeModel(Model *model)
 {
-    for (auto iterator = modelStore.begin(); iterator != modelStore.end(); ++iterator)
+    if(modelStore != nullptr)
     {
-        if((*iterator) == model)
-        {
-            modelStore.erase(iterator);
-            delete model;
-            return true;
-        }
+        delete modelStore;
+        return true;
     }
 
     return false;

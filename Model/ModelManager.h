@@ -24,7 +24,7 @@ public:
 private:
     static ModelManager* INSTANCE;
 
-    std::vector<Model*> modelStore;
+    Model* modelStore;
 };
 
 

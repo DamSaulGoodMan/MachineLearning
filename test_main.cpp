@@ -5,6 +5,8 @@
 #include <iostream>
 #include "Model/ModelLinear.h"
 #include "Model/ModelManager.h"
+#include "Model/ModelMultiLayers.h"
+
 
 using namespace std;
 
@@ -49,15 +51,18 @@ void damTest();
 
 int main()
 {
-    hugoTest();
-    //damTest();
+    //hugoTest();
+    damTest();
 }
 
 void damTest()
 {
-    auto manager = ModelManager::getModelManager();
-    auto modelLinear = new ModelLinear(2);
-    manager->addNewModel(modelLinear);
-    //modelLinear->train()
-    //cout << "Model has been remove ? " << manager->removeModel(modelLinear) << endl;
+    int neuronesPerLayers[4] = {2, 3, 2, 1};
+    auto modelLi = new ModelMultiLayers(4, neuronesPerLayers);
+    double trainingParams[] = {-3, 9, 6, 13, -7, 2};
+    double trainingResults[] = {1, 1, -1};
+
+    modelLi->train(trainingParams, 3, trainingResults, 0.001, 100);
+
+    //delete modelLi;
 }
