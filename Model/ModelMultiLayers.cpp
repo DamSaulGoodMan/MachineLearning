@@ -24,6 +24,7 @@ ModelMultiLayers::ModelMultiLayers(int numOfLayer, int neuronesInLayer[])
         if(cnt > 0)
         {
             weight[cnt] = new double*[neuronesInLayer[cnt]];
+            // TODO change I and J
             for (int cnt1 = 0; cnt1 < neuronesInLayer[cnt] + 1; cnt1++)
             {
                 weight[cnt][cnt1] = new double[neuronesInLayer[cnt - 1]];
@@ -45,59 +46,42 @@ ModelMultiLayers::ModelMultiLayers(int numOfLayer, int neuronesInLayer[])
 void
 ModelMultiLayers::train(double *valuesOfEntry, int entryNumber, double *predictState, double trainingStep, int epoch)
 {
+
+    double** delta = new double*[numOfLayer];
+    for (int cnt1 = 0; cnt1 < numOfLayer; cnt1++)
+    {
+        delta[cnt1] = new double[neuronesInLayer[cnt1] + 1];
+    }
+
     for(int cnt = 0; cnt < epoch; cnt++)
     {
         int pickedTraining = rand() % entryNumber;
         double* trainingParamsPointer = valuesOfEntry + (pickedTraining * (entryNumber - 1));
 
-        std::cerr << "[ 0 ]" << std::endl;
-
         predict(trainingParamsPointer);
-
-        std::cerr << "[ 1 ]" << std::endl;
-
-        double* delta[numOfLayer];
-        for (int cnt1 = 0; cnt1 < numOfLayer; cnt1++)
-        {
-            std::cerr << "[ 1.0 ] delta[" << cnt << "][" << neuronesInLayer[cnt1] + 1 << "]" << std::endl;
-            delta[cnt1] = new double[neuronesInLayer[cnt1] + 1];
-        }
-
-        std::cerr << "[ 2 ]" << std::endl;
 
         for (int cnt1 = 0; cnt1 < neuronesInLayer[numOfLayer - 1] + 1; cnt1++)
         {
-            delta[0][numOfLayer - 1] = (1 - pow(neurones[numOfLayer - 1][cnt1], 2)) *
+            std::cerr << numOfLayer << std::endl;
+            delta[numOfLayer - 1][cnt1] = (1 - pow(neurones[numOfLayer - 1][cnt1], 2)) *
                     ((neurones[numOfLayer - 1][cnt1]) - predictState[pickedTraining]);
         }
 
-        std::cerr << "[ 3 ]" << std::endl;
-
-        for (int cnt1 = numOfLayer - 2; cnt1 >= 0; cnt1--)
+        for (int l = numOfLayer - 2; l >= 0; l--)
         {
-            std::cerr << "[ 3.0 ]" << std::endl;
-            for (int cnt2 = 0; cnt2 < neuronesInLayer[cnt1] + 1; cnt2++)
+            for (int i = 0; i < neuronesInLayer[l] + 1; i++)
             {
-                std::cerr << "[ 3.1 ] cnt1=" << cnt1 << " && cnt2=" << cnt2 << std::endl;
-                std::cerr << "[ 3.1 ] neuronesInLayer[cnt1 + 1]=" << neuronesInLayer[cnt1 + 1] << std::endl;
-                for (int cnt3 = 1; cnt3 < neuronesInLayer[cnt1 + 1] + 1; cnt3++)
+                std::cerr << "neuronesInLayer[" << l << "] + 1=" << neuronesInLayer[l] + 1 << std::endl;
+                delta[l][i] = 0;
+                for (int j = 1; j < neuronesInLayer[l + 1] + 1; j++)
                 {
-                    //if(cnt3 == 1) delta[cnt1][cnt2] = 0;
-                    std::cerr << "[ 3.2 ] cnt3=" << cnt3 << std::endl;
-                    std::cerr << "[ 3.2 ] cnt1=" << cnt1 << " && cnt2=" << cnt2 << std::endl;
-                    std::cerr << "[ 3.2 ] delta[" << cnt1 << "][" << cnt2 << "]=" << delta[cnt1][cnt2] << std::endl;
-
-//                    if(cnt1 + 1 == 1 && cnt2 == 3 && cnt3 == 0) {
-//                        std::cerr << " TEST : weight[1][3][0] =" << weight[1][3][0] << std::endl;
-//                        return;
-//                    }
-                    delta[cnt1][cnt2] += (weight[cnt1 + 1][cnt2][cnt3] * delta[cnt1][cnt2]);
+                    std::cerr << "weight[" << l + 1 << "][" << i << "][" << j << "]=" << weight[l + 1][i][j] << std::endl;
+                    std::cerr << "delta[l + 1][j]=" << delta[l + 1][j] << std::endl;
+                    delta[l][i] += weight[l + 1][i][j] * delta[l + 1][j];
                 }
-                delta[cnt1][cnt2] *= (1 - pow(neurones[cnt1][cnt2], 2));
+                delta[l][i] *= 1 - pow(neurones[l][i], 2);
             }
         }
-
-        std::cerr << "[ 4 ]" << std::endl;
 
         for (int cnt1 = 1; cnt1 < numOfLayer; cnt1++)
         {
@@ -113,14 +97,14 @@ ModelMultiLayers::train(double *valuesOfEntry, int entryNumber, double *predictS
                 }
             }
         }
-
         std::cerr << "[ 5 ]" << std::endl;
-
-        for (int cnt1 = 0; cnt < numOfLayer; cnt1++)
-        {
-            delete[] delta[cnt1];
-        }
     }
+
+    for (int cnt1 = 0; cnt1 < numOfLayer; cnt1++)
+    {
+        delete[] delta[cnt1];
+    }
+    delete[] delta;
 }
 
 void ModelMultiLayers::regress(double inputs[], int nbOfInputsPackets, double predictState[]) {}
@@ -135,9 +119,9 @@ double ModelMultiLayers::predict(double *entry)
     // odl : "cnt1 < numOfLayer - 1;" Why - 1 ??
     for (int cnt1 = 1; cnt1 < numOfLayer; cnt1++)
     {
-        for (int cnt2 = 0; cnt2 < neuronesInLayer[cnt1]; cnt2++)
+        for (int cnt2 = 1; cnt2 < neuronesInLayer[cnt1] + 1; cnt2++)
         {
-            for (int cnt3 = 0; cnt3 < neuronesInLayer[cnt1 - 1]; cnt3++)
+            for (int cnt3 = 0; cnt3 < neuronesInLayer[cnt1 - 1] + 1; cnt3++)
             {
                 neurones[cnt1][cnt2] += weight[cnt1][cnt2][cnt3] * neurones[cnt1 - 1][cnt2];
             }
