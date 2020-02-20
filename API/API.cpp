@@ -1,6 +1,7 @@
 #include "API.h"
 #include "../Model/ModelManager.h"
 #include "../Model/ModelMultiLayers.h"
+#include "../Model/RBFNaive.h"
 
 #include <iostream>
 
@@ -20,6 +21,15 @@ EXPORTED ModelMultiLayers* createMultiLayersModel(int numOfLayer, int neuronesIn
 EXPORTED ModelLinear* createLinearModel(int dimInputNumber, int dimOutputNumber)
 {
     auto model = new ModelLinear(dimInputNumber);
+
+    ModelManager::getModelManager()->addNewModel(model);
+
+    return model;
+}
+
+EXPORTED RBFNaive* createRBFNaiveModel(int dimInputNumber, double gamma)
+{
+    auto model = new RBFNaive(dimInputNumber, gamma);
 
     ModelManager::getModelManager()->addNewModel(model);
 

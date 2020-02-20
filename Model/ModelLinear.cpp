@@ -45,7 +45,7 @@ void ModelLinear::regress(double inputs[], int nbOfInputsPackets, double predict
 
     // Apply result to weight
     for(int i = 0; i < nbOfInputsPackets; i++) {
-        weights[i] += result(i, 0);
+        weights[i] = result(i, 0);
     }
 }
 
