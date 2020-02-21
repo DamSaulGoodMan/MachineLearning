@@ -22,7 +22,7 @@ ModelLinear::ModelLinear(int dimInputNumber)
     }
 }
 
-void ModelLinear::regress(double inputs[], int nbOfInputsPackets, double predictState[])
+void ModelLinear::regress(double inputs[], int nbOfInputsPackets, double t, double predictState[], int epoch)
 {
     // INIT
     int packetSize = 2;

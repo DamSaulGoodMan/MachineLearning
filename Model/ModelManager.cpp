@@ -27,11 +27,11 @@ void ModelManager::addNewModel(Model* model)
 
 bool ModelManager::removeModel(Model *model)
 {
-//    if(modelStore != nullptr)
-//    {
-//        delete modelStore;
-//        return true;
-//    }
+    if(modelStore != nullptr)
+    {
+        delete modelStore;
+        return true;
+    }
 
     return false;
 }

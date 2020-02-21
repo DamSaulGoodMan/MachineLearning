@@ -24,7 +24,7 @@ RBFNaive::RBFNaive(int dimInputNumber, double gamma)
     this->gamma = gamma;
 }
 
-void RBFNaive::regress(double inputs[], int nbOfInputsPackets, double predictState[])
+void RBFNaive::regress(double inputs[], int nbOfInputsPackets, double t, double predictState[], int epoch)
 {
 
 }

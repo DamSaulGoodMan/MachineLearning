@@ -53,7 +53,7 @@ EXPORTED void trainModel(Model* model, double valuesOfEntry[], int entryNumber,
 
 EXPORTED void regressModel(Model* model, double inputs[], int nbOfInputsPackets, double predictState[])
 {
-    model->regress(inputs, nbOfInputsPackets, predictState);
+    model->regress(inputs, nbOfInputsPackets, 0, predictState, 0);
 }
 
 EXPORTED double predict(Model* model, double params[])

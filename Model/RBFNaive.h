@@ -14,7 +14,7 @@ class RBFNaive : public Model
 public:
     RBFNaive(int dimInputNumber, double gamma);
 
-    void regress(double inputs[], int nbOfInputsPackets, double predictState[]) override;
+    void regress(double inputs[], int nbOfInputsPackets, double t, double predictState[], int epoch) override;
     void train(double valuesOfEntry[], int entryNumber, double predictState[], double _, int epoch) override;
     double predict(double *params) override;
     double predictRegression(double *params) override;

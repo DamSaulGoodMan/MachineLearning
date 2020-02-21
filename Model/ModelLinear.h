@@ -14,7 +14,7 @@ class ModelLinear : public Model
 public:
     explicit ModelLinear(int dimInputNumber);
 
-    void regress(double inputs[], int nbOfInputsPackets, double predictState[]) override;
+    void regress(double inputs[], int nbOfInputsPackets, double t, double predictState[], int epoch) override;
     void train(double valuesOfEntry[], int entryNumber, double predictState[], double trainingStep, int epoch) override;
     double predict(double *params) override;
     double predictRegression(double *params) override;
