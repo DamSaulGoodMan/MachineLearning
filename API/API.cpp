@@ -36,6 +36,15 @@ EXPORTED RBFNaive* createRBFNaiveModel(int dimInputNumber, double gamma)
     return model;
 }
 
+EXPORTED ModelMultiLayers* createPMCModel(int dimInputNumber, int* neuronesInLayers)
+{
+    auto model = new ModelMultiLayers(dimInputNumber, neuronesInLayers);
+
+    ModelManager::getModelManager()->addNewModel(model);
+
+    return model;
+}
+
 EXPORTED void trainModel(Model* model, double valuesOfEntry[], int entryNumber,
         double predictState[], double trainingStep, int epoch)
 {
