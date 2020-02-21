@@ -51,9 +51,9 @@ EXPORTED void trainModel(Model* model, double valuesOfEntry[], int entryNumber,
     model->train(valuesOfEntry, entryNumber, predictState, trainingStep, epoch);
 }
 
-EXPORTED void regressModel(Model* model, double inputs[], int nbOfInputsPackets, double predictState[])
+EXPORTED void regressModel(Model* model, double inputs[], int nbOfInputsPackets, double predictState[], double trainingStep, int epoch)
 {
-    model->regress(inputs, nbOfInputsPackets, 0, predictState, 0);
+    model->regress(inputs, nbOfInputsPackets, trainingStep, predictState, epoch);
 }
 
 EXPORTED double predict(Model* model, double params[])
