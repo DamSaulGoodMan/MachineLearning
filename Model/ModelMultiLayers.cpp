@@ -95,7 +95,7 @@ ModelMultiLayers::train(double *valuesOfEntry, int entryNumber, double *predictS
     delete[] delta;
 }
 
-void ModelMultiLayers::regress(double inputs[], int nbOfInputsPackets, double trainingStep, double predictState[], int epoch)
+void ModelMultiLayers::regress(double inputs[], int nbOfInputsPackets, double predictState[], double trainigStep, int epoch)
 {
     double** delta = new double*[numOfLayer];
     for (int cnt1 = 0; cnt1 < numOfLayer; cnt1++)
@@ -134,7 +134,7 @@ void ModelMultiLayers::regress(double inputs[], int nbOfInputsPackets, double tr
             {
                 for (int i = 0; i < neuronesInLayer[l - 1] + 1; i++)
                 {
-                    weight[l][j][i] -= trainingStep * neurones[l - 1][i] * delta[l][j];
+                    weight[l][j][i] -= trainigStep * neurones[l - 1][i] * delta[l][j];
                 }
             }
         }
