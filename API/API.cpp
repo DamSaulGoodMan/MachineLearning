@@ -7,13 +7,16 @@
 
 using namespace std;
 
+
+//Model* modelStore;
+
 extern "C"
 {
 EXPORTED ModelMultiLayers* createMultiLayersModel(int numOfLayer, int neuronesInLayer[])
 {
     auto model = new ModelMultiLayers(numOfLayer, neuronesInLayer);
 
-    ModelManager::getModelManager()->addNewModel(model);
+    //ModelManager::getModelManager()->addNewModel(model);
 
     return model;
 }
@@ -22,7 +25,7 @@ EXPORTED ModelLinear* createLinearModel(int dimInputNumber, int dimOutputNumber)
 {
     auto model = new ModelLinear(dimInputNumber);
 
-    ModelManager::getModelManager()->addNewModel(model);
+    //ModelManager::getModelManager()->addNewModel(model);
 
     return model;
 }
@@ -31,7 +34,7 @@ EXPORTED RBFNaive* createRBFNaiveModel(int dimInputNumber, double gamma)
 {
     auto model = new RBFNaive(dimInputNumber, gamma);
 
-    ModelManager::getModelManager()->addNewModel(model);
+    //ModelManager::getModelManager()->addNewModel(model);
 
     return model;
 }
@@ -40,7 +43,7 @@ EXPORTED ModelMultiLayers* createPMCModel(int dimInputNumber, int* neuronesInLay
 {
     auto model = new ModelMultiLayers(dimInputNumber, neuronesInLayers);
 
-    ModelManager::getModelManager()->addNewModel(model);
+    //ModelManager::getModelManager()->addNewModel(model);
 
     return model;
 }
