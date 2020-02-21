@@ -57,12 +57,16 @@ int main()
 
 void damTest()
 {
-    int neuronesPerLayers[4] = {2, 3, 2, 1};
-    auto modelLi = new ModelMultiLayers(4, neuronesPerLayers);
-    double trainingParams[] = {-3, 9, 6, 13, -7, 2};
-    double trainingResults[] = {1, 1, -1};
+    int neuronesPerLayers[2] = {2, 1};
+    auto modelLi = new ModelMultiLayers(2, neuronesPerLayers);
+    double trainingParams[] = {-1, -1, 1, 1, -1, 1, 1, -1};
+    double trainingResults[] = {1, -1, 1, -1};
 
-    modelLi->train(trainingParams, 3, trainingResults, 0.001, 100);
+    modelLi->train(trainingParams, 4, trainingResults, 0.01, 10000);
 
+    std::cout << modelLi->predict(trainingParams) << std::endl;
+    std::cout << modelLi->predict(trainingParams+2) << std::endl;
+    std::cout << modelLi->predict(trainingParams+4) << std::endl;
+    std::cout << modelLi->predict(trainingParams+6) << std::endl;
     //delete modelLi;
 }

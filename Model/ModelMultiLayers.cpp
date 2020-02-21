@@ -11,13 +11,17 @@
 
 ModelMultiLayers::ModelMultiLayers(int numOfLayer, int neuronesInLayer[])
      : Model(neuronesInLayer[0], neuronesInLayer[numOfLayer - 1]),
-        numOfLayer(numOfLayer), neuronesInLayer(neuronesInLayer)
+        numOfLayer(numOfLayer)
 {
     neurones = new double*[numOfLayer];
     weight = new double**[numOfLayer];
+    this->neuronesInLayer = new int[numOfLayer];
+
+
 
     for (int l = 0; l < numOfLayer; l++)
     {
+        this->neuronesInLayer[l] = neuronesInLayer[l];
         neurones[l] = new double[neuronesInLayer[l] + 1];
         neurones[l][0] = 1;
 
@@ -30,7 +34,7 @@ ModelMultiLayers::ModelMultiLayers(int numOfLayer, int neuronesInLayer[])
                 for (int i = 0; i < neuronesInLayer[l - 1] + 1; i++)
                 {
                     weight[l][j][i] = Commun::fRand(-1.0f, 1.0f);
-                    std::cerr << "[ Weight ] [" << l << "][" << j << "][" << i << "]" << std::endl;
+                    // std::cerr << "[ Weight ] [" << l << "][" << j << "][" << i << "]" << std::endl;
                 }
             }
         }
@@ -50,11 +54,11 @@ ModelMultiLayers::train(double *valuesOfEntry, int entryNumber, double *predictS
     for(int cnt = 0; cnt < epoch; cnt++)
     {
         int pickedTraining = rand() % entryNumber;
-        double* trainingParamsPointer = valuesOfEntry + (pickedTraining * (entryNumber - 1));
+        double* trainingParamsPointer = valuesOfEntry + (pickedTraining * neuronesInLayer[0]);
 
         predict(trainingParamsPointer);
 
-        for (int i = 0; i < neuronesInLayer[numOfLayer - 1] + 1; i++)
+        for (int i = 1; i < neuronesInLayer[numOfLayer - 1] + 1; i++)
         {
             delta[numOfLayer - 1][i] = (1 - pow(neurones[numOfLayer - 1][i], 2)) *
                                        ((neurones[numOfLayer - 1][i]) - predictState[pickedTraining]);
@@ -62,14 +66,14 @@ ModelMultiLayers::train(double *valuesOfEntry, int entryNumber, double *predictS
 
         for (int l = numOfLayer - 2; l >= 0; l--)
         {
-            for (int i = 0; i < neuronesInLayer[l] + 1; i++)
+            for (int i = 1; i < neuronesInLayer[l] + 1; i++)
             {
-                std::cerr << "neuronesInLayer[" << l << "] + 1=" << neuronesInLayer[l] + 1 << std::endl;
+//                std::cerr << "neuronesInLayer[" << l << "] + 1=" << neuronesInLayer[l] + 1 << std::endl;
                 delta[l][i] = 0;
                 for (int j = 1; j < neuronesInLayer[l + 1] + 1; j++)
                 {
-                    std::cerr << "weight[" << l + 1 << "][" << i << "][" << j << "]=" << weight[l + 1][j][i] << std::endl;
-                    std::cerr << "delta[l + 1][j]=" << delta[l + 1][j] << std::endl;
+ //                   std::cerr << "weight[" << l + 1 << "][" << i << "][" << j << "]=" << weight[l + 1][j][i] << std::endl;
+ //                   std::cerr << "delta[l + 1][j]=" << delta[l + 1][j] << std::endl;
                     delta[l][i] += weight[l + 1][j][i] * delta[l + 1][j];
                 }
                 delta[l][i] *= 1 - pow(neurones[l][i], 2);
@@ -78,19 +82,19 @@ ModelMultiLayers::train(double *valuesOfEntry, int entryNumber, double *predictS
 
         for (int l = 1; l < numOfLayer; l++)
         {
-            std::cerr << "[ 4.0 ]" << std::endl;
-            for (int j = 0; j < neuronesInLayer[l] + 1; j++)
+ //           std::cerr << "[ 4.0 ]" << std::endl;
+            for (int j = 1; j < neuronesInLayer[l] + 1; j++)
             {
-                std::cerr << "[ 4.1 ]" << std::endl;
+  //              std::cerr << "[ 4.1 ]" << std::endl;
                 for (int i = 0; i < neuronesInLayer[l - 1] + 1; i++)
                 {
-                    std::cerr << "[ 4.2 ] [" << l << "][" << j << "][" << i << "]" << std::endl;
-                    std::cerr << "weight[l][j][i]=" << weight[l][j][i] << std::endl;
+   //                 std::cerr << "[ 4.2 ] [" << l << "][" << j << "][" << i << "]" << std::endl;
+   //                 std::cerr << "weight[l][j][i]=" << weight[l][j][i] << std::endl;
                     weight[l][j][i] -= trainingStep * neurones[l - 1][i] * delta[l][j];
                 }
             }
         }
-        std::cerr << "[ 5 ]" << std::endl;
+  //      std::cerr << "[ 5 ]" << std::endl;
     }
 
     for (int cnt1 = 0; cnt1 < numOfLayer; cnt1++)
@@ -113,6 +117,7 @@ double ModelMultiLayers::predict(double *entry)
     {
         for (int j = 1; j < neuronesInLayer[l] + 1; j++)
         {
+            neurones[l][j] = 0;
             for (int i = 0; i < neuronesInLayer[l - 1] + 1; i++)
             {
                 neurones[l][j] += weight[l][j][i] * neurones[l - 1][i];
@@ -121,7 +126,7 @@ double ModelMultiLayers::predict(double *entry)
         }
     }
 
-    return (neurones[numOfLayer - 1][1] < 0) ? -1 : 1;
+    return neurones[numOfLayer - 1][1];// (neurones[numOfLayer - 1][1] < 0) ? -1 : 1;
 }
 
 
